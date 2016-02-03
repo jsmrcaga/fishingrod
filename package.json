@@ -1,0 +1,19 @@
+{
+  "name": "fishingrod",
+  "version": "1.0.1",
+  "description": "Very small http request lib",
+  "main": "fishingrod.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fishing",
+    "rod",
+    "fishingrod",
+    "request",
+    "http",
+    "https"
+  ],
+  "author": "Jo Colina",
+  "license": "MIT"
+}
