@@ -10,11 +10,15 @@ var config = {
 	debug: false,
 
 	default: function(params){
-		console.log("Entered Default");
 		var http_type = params.split("://")[0];
-		config.http = (http_type.substr(-1,1) == "s") ? https : http;
+		var rest = null;
+		if(http_type.substr(0,4) == "http") {
+			config.http = (http_type.substr(-1,1) == "s") ? https : http;
+			rest = params.split("://")[1];
+		}else{
+			rest = http_type;
+		}
 		
-		var rest = params.split("://")[1];
 		var host = rest.split("/")[0];
 
 		var path = "/";
@@ -25,13 +29,10 @@ var config = {
 			}
 		}
 
-		config.options = {
-			method: "GET",
-			host: host,
-			path: path
-		};
-
-		console.log("Set defaults:", config.options);
+		config.options.method = "GET";
+		config.options.host= host;
+		config.options.path= path;
+		
 	}
 }
 /*
@@ -57,14 +58,12 @@ var fishingrod = {
 
 		options:{
 			set: function _setOptions(options){
-				console.log("Setting Options");
 				for(var opt in options){
 					if(config.acceptedOptions.indexOf(opt) == -1) continue;
 					if(opt == 'method') options[opt].toUpperCase();
 					if(opt == 'path' && options[opt] == "") options[opt] = "/";
 					config.options[opt] = options[opt];
 				}
-				console.log("Set options: ", config.options);
 			}
 		},
 
@@ -74,6 +73,24 @@ var fishingrod = {
 			}else{
 				config.debug = false;
 			}
+		},
+
+		setHeaders: function _setHeaders(headers){
+			config.options.headers = {};
+			for(var h in headers){
+				config.options.headers[h] = headers[h];
+			}
+		},
+
+		addHeaders: function _addHeaders(headers){
+			config.options.headers = (!config.options.headers) ? {} : config.options.headers;
+			for(var h in headers){
+				config.options.headers[h] = headers[h];
+			}
+		},
+
+		getOptions: function _getOptions(){
+			return config.options;
 		}
 	},
 
