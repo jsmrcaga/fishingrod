@@ -22,10 +22,10 @@ var config = {
 		var host = rest.split("/")[0];
 
 		var path = "/";
-		var semi_path = rest.split("/")[1];
+		var semi_path = rest.split("/").slice(1);
 		if(typeof semi_path != 'undefined'){
 			for(var i = 0; i < semi_path.length; i++){
-				path += semi_path[i];
+				path += semi_path[i] + "/";
 			}
 		}
 
@@ -35,16 +35,7 @@ var config = {
 		
 	}
 }
-/*
-http: "http://",
-	hostname: 'localhost',
-	path: '',
-	method: 'POST',
-	port: 7474,
-	encoding : 'utf8',
-	headers:{
-		'Content-Type': 'application/json'
-	}*/
+
 var fishingrod = {
 	config:{
 		https:{
@@ -95,14 +86,13 @@ var fishingrod = {
 	},
 
 	fish: function (params, callback){
+
 		if(typeof params == 'string') {
 			config.default(params);
 		}else{
 			fishingrod.config.options.set(params);
 			if(params.debug) config.debug(1);	
 		}
-
-		
 
 		var response = "";
 
@@ -116,6 +106,7 @@ var fishingrod = {
 				if(callback){
 					callback({
 						status:res.statusCode,
+						headers: res.headers
 					}, response);
 				}else{
 					console.log("You should define a callback");
@@ -124,6 +115,7 @@ var fishingrod = {
 		});
 
 		request.on('error', function(e){
+			callback({error:e}, response);
 			throw new Error(e);
 		});
 
