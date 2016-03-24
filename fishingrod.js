@@ -53,9 +53,13 @@ var fishingrod = {
 					if(config.acceptedOptions.indexOf(opt) == -1) continue;
 					if(opt == 'method') options[opt].toUpperCase();
 					if(opt == 'path' && options[opt] == "") options[opt] = "/";
-					if((opt == "https" || opt == 'ssl') && options[opt]) {
-						config.http = https;
-						continue;
+					if((opt == "https" || opt == 'ssl')) {
+						if(options[opt]){
+							config.http = https;
+							continue;
+						}else{
+							config.http = http;
+						}
 					}
 					config.options[opt] = options[opt];
 				}

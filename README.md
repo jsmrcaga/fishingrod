@@ -40,7 +40,7 @@ Accepted options are:
 
 | Name | Type | Definition |
 |--------|------|-----------|
-| `https | ssl` | `Boolean` | Defines if request will use HTTPS |
+| `https | ssl` | `Boolean` | Defines if request will use HTTPS or HTTP |
 | `host | hostname` | `String` | The host to call, example: `example.com` |
 | `path` | `String` (begins with `/`) | The path to append to the `host`. |
 | `port` | `Integer` | The port to be used in HTTP request. |
