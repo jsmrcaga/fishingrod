@@ -1,7 +1,7 @@
 
 {
   "name": "fishingrod",
-  "version": "1.4.5",
+  "version": "1.4.7",
   "description": "Very small http request lib",
   "main": "fishingrod.js",
   "scripts": {

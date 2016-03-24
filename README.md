@@ -5,9 +5,6 @@ A simple module for making http requests, depends on `nothing` but `http` and `h
 `NOTE:` this is not intended to be a full-featured http package, or a full-tested module. This is a simple,
 working http module, that permits very simple requests. `Do not use in production without testing`.
 
-fishingrod was made to have lasting configuration, meaning that if we set `options` to https, `example.com` once, they 
-will remain the same until changed.
-
 Every new call to `fish` will modify the general options.
 
 ## Example

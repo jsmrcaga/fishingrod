@@ -2,7 +2,6 @@ var http = require('http');
 var https = require('https');
 
 var config = {
-	acceptedOptions : ["host", "hostname", "path", "port", "encoding", "headers", "method"],
 	acceptedOptions : ["https", "ssl","host", "hostname", "path", "port", "encoding", "headers", "method"],
 	acceptedMethods : ["GET", "PUT", "POST", "DELETE", "PATCH"],
 	options:{},
@@ -91,7 +90,9 @@ var fishingrod = {
 	},
 
 	fish: function (params, callback){
-
+		// flush config
+		config.options = {};
+		
 		if(typeof params == 'string') {
 			config.default(params);
 		}else{
