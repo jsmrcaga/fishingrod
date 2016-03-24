@@ -95,6 +95,16 @@ var fishingrod = {
 		if(typeof params == 'string') {
 			config.default(params);
 		}else{
+			if(params.data){
+				var data_length = JSON.stringify(params.data).length;
+				if(params.headers && !params.headers['Content-Length']){
+					params.headers['Content-Length'] = data_length;
+				}else if(!params.headers){
+					params.headers = {};
+					params.headers['Content-Length'] = data_length;
+				}
+			}
+
 			fishingrod.config.options.set(params);
 			if(params.debug) config.debug(1);	
 		}
@@ -130,7 +140,6 @@ var fishingrod = {
 		if(typeof params.data !='undefined' && params.data!=null){
 			fish_log("Writing data to HTTP Request:", params.data);
 			request.write(JSON.stringify(params.data));
-
 			request.end();
 		}else{
 			request.end();
