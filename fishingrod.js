@@ -3,6 +3,7 @@ var https = require('https');
 
 var config = {
 	acceptedOptions : ["host", "hostname", "path", "port", "encoding", "headers", "method"],
+	acceptedOptions : ["https", "ssl","host", "hostname", "path", "port", "encoding", "headers", "method"],
 	acceptedMethods : ["GET", "PUT", "POST", "DELETE", "PATCH"],
 	options:{},
 	http: http,
@@ -53,6 +54,10 @@ var fishingrod = {
 					if(config.acceptedOptions.indexOf(opt) == -1) continue;
 					if(opt == 'method') options[opt].toUpperCase();
 					if(opt == 'path' && options[opt] == "") options[opt] = "/";
+					if((opt == "https" || opt == 'ssl') && options[opt]) {
+						config.http = https;
+						continue;
+					}
 					config.options[opt] = options[opt];
 				}
 			}
@@ -94,6 +99,9 @@ var fishingrod = {
 			if(params.debug) config.debug(1);	
 		}
 
+		fish_log("Sending request to host:", config.options.host || config.options.hostname, " and path: ", config.options.path);
+		fish_log("Sending Request as: ", (config.http == http) ? "HTTP" : "HTTPS", config.options.method, config.options.headers);
+
 		var response = "";
 
 		var request = config.http.request(config.options, function (res){
@@ -109,19 +117,20 @@ var fishingrod = {
 						headers: res.headers
 					}, response);
 				}else{
-					console.log("You should define a callback");
+					fish_log("You should define a callback");
 				}
 			});
 		});
 
 		request.on('error', function(e){
 			callback({error:e}, response);
-			throw new Error(e);
+			fish_log("Error", e);
 		});
 
 		if(typeof params.data !='undefined' && params.data!=null){
-
+			fish_log("Writing data to HTTP Request:", params.data);
 			request.write(JSON.stringify(params.data));
+
 			request.end();
 		}else{
 			request.end();
@@ -129,5 +138,11 @@ var fishingrod = {
 
 	}
 };
+
+function fish_log() {
+	if(config.debug){
+		console.log.apply(console, arguments);
+	}
+}
 
 module.exports = fishingrod;	
