@@ -2,7 +2,7 @@ var http = require('http');
 var https = require('https');
 
 var config = {
-	acceptedOptions : ["host", "hostname", "path", "port", "encoding", "headers"],
+	acceptedOptions : ["host", "hostname", "path", "port", "encoding", "headers", "method"],
 	acceptedMethods : ["GET", "PUT", "POST", "DELETE", "PATCH"],
 	options:{},
 	http: http,
