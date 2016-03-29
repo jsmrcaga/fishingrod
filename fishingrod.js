@@ -59,6 +59,7 @@ var fishingrod = {
 							continue;
 						}else{
 							config.http = http;
+							continue;
 						}
 					}
 					config.options[opt] = options[opt];
