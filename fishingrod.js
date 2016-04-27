@@ -5,6 +5,7 @@ var config = {
 	acceptedOptions : ["https", "ssl","host", "hostname", "path", "port", "encoding", "headers", "method"],
 	acceptedMethods : ["GET", "PUT", "POST", "DELETE", "PATCH"],
 	options:{},
+	permanent_headers:{};
 	http: http,
 
 	debug: false,
@@ -64,6 +65,16 @@ var fishingrod = {
 					}
 					config.options[opt] = options[opt];
 				}
+
+				// add permanent headers
+				if(!config.options.headers){ 
+					config.options.headers = config.permanent_headers;
+				} else {
+					for(var h in config.permanent_headers){
+						if(config.options.headers[h]) continue;
+						config.options.headers[h] = config.permanent_headers[h];
+					}
+				}
 			}
 		},
 
@@ -76,9 +87,9 @@ var fishingrod = {
 		},
 
 		setHeaders: function _setHeaders(headers){
-			config.options.headers = {};
+			config.permanent_headers = {};
 			for(var h in headers){
-				config.options.headers[h] = headers[h];
+				config.permanent_headers[h] = headers[h];
 			}
 		},
 
@@ -102,7 +113,7 @@ var fishingrod = {
 			config.default(params);
 		}else{
 			if(params.data){
-				var data_length = JSON.stringify(params.data).length;
+				var data_length = Buffer.byteLength(JSON.stringify(params.data));
 				if(params.headers && !params.headers['Content-Length']){
 					params.headers['Content-Length'] = data_length;
 				}else if(!params.headers){
