@@ -5,7 +5,7 @@ var config = {
 	acceptedOptions : ["https", "ssl","host", "hostname", "path", "port", "encoding", "headers", "method"],
 	acceptedMethods : ["GET", "PUT", "POST", "DELETE", "PATCH"],
 	options:{},
-	permanent_headers:{};
+	permanent_headers:{},
 	http: http,
 
 	debug: false,
