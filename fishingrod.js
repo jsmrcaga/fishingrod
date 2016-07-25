@@ -115,9 +115,11 @@ var fishingrod = {
 			if(params.data){
 				var data_length = null;
 				if((('Content-Type' in params.headers) && params.headers['Content-Type'] === 'application/json' && (params.data instanceof Object)) || 
-					!(('Content-Type' in params.headers) && (params.data instanceof Object))){
+					(!('Content-Type' in params.headers) && (params.data instanceof Object))){
+					fish_log("Length with stringification");
 					data_length = Buffer.byteLength(JSON.stringify(params.data));
 				} else {
+					fish_log("Length without stringification");
 					data_length = Buffer.byteLength(params.data);
 				}
 
