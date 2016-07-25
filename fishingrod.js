@@ -156,7 +156,12 @@ var fishingrod = {
 
 		if(typeof params.data !='undefined' && params.data!=null){
 			fish_log("Writing data to HTTP Request:", params.data);
-			request.write(JSON.stringify(params.data));
+			if((params.data instanceof Object && ('Content-Type' in params.headers) && params.headers['Content-Type']==='application/json') || 
+				(params.data && !('Content-Type' in params.headers))){
+				request.write(JSON.stringify(params.data));
+			} else {
+				request.write(params.data);
+			}
 			request.end();
 		}else{
 			request.end();
