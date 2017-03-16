@@ -16,6 +16,8 @@ fishingrod.fish = function(params, callback){
 			} else if (params.protocol === 'https:'){
 				params.https = true;
 			}
+		} else {
+			params.https = false;
 		}
 	}
 
