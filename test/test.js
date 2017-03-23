@@ -285,3 +285,35 @@ describe('Promise Tests', function(){
 		});
 	});
 });
+
+describe('Promise + Callback tests', function(){
+	it('Should execute both callback and promise', function(done){
+		var counter = 2;
+
+		fishingrod.fish({
+			https:true,
+			method: 'POST',
+			host: 'jsonplaceholder.typicode.com',
+			path:'/posts',
+			data:{
+				title: 'My super title',
+				body: 'My awesome body'
+			},
+			headers:{
+				'Content-Type': 'application/json'
+			}
+		}, function(err, st, res){
+			counter--;
+			if(counter === 0){
+				done();
+			}
+		}).then((res)=>{
+			counter--;
+			if(counter === 0){
+				done();
+			}
+		}).catch((e)=>{
+			done();
+		});
+	});
+});
