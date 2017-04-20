@@ -17,13 +17,16 @@ describe('Data manipulation handling', function(){
 
 	it('Should return a string of : separated data (array)', function(){
 		expect(req.handle({
-			data:['un','petit', 'poulet']
+			data:['un','petit', 'poulet'],
+			headers:{
+				'Content-Type': 'application/x-www-form-urlencoded'
+			}
 		},{
 			join: ':'
 		})).to.be.eql('un:petit:poulet');
 	});
 
-	it('Should return a string of ; separated data', function(){
+	it('Should return a string of & separated data', function(){
 		expect(req.handle({
 			data:{
 				un:'un',
@@ -33,7 +36,7 @@ describe('Data manipulation handling', function(){
 			headers:{
 				'Content-Type':'application/x-www-form-urlencoded'
 			}
-		})).to.be.eql('un=un;petit=petit;poulet=poulet;');
+		})).to.be.eql('un=un&petit=petit&poulet=poulet');
 	});
 
 	it('Should return a string of : separated data', function(){
@@ -48,7 +51,7 @@ describe('Data manipulation handling', function(){
 			}
 		}, {
 			join: ':'
-		})).to.be.eql('un=un:petit=petit:poulet=poulet:');
+		})).to.be.eql('un=un:petit=petit:poulet=poulet');
 	});
 
 	it('Should return a string of ^^ separated data and {} joined', function(){
@@ -64,7 +67,7 @@ describe('Data manipulation handling', function(){
 		}, {
 			join: '{}',
 			separator: '^^'
-		})).to.be.eql('un^^un{}petit^^petit{}poulet^^poulet{}');
+		})).to.be.eql('un^^un{}petit^^petit{}poulet^^poulet');
 	});
 
 	it('Should return a stringified version of data', function(){
@@ -76,7 +79,8 @@ describe('Data manipulation handling', function(){
 			},
 			headers:{
 				'Content-Type':'application/json'
-			}
+			},
+			method: 'POST'
 		})).to.be.eql(JSON.stringify({
 			un:'un',
 			petit:'petit',
@@ -93,7 +97,8 @@ describe('Data manipulation handling', function(){
 			},
 			headers:{
 				'Content-Type':'unknown/type'
-			}
+			},
+			method: 'POST'
 		})).to.be.eql(JSON.stringify({
 			un:'un',
 			petit:'petit',
@@ -196,7 +201,6 @@ describe('HTTP Tests', function(){
 			if(err){
 				throw new Error(err);
 			}
-
 			res = JSON.parse(res);
 			expect(res.title).to.be.eql('My super title');
 			expect(res.body).to.be.eql('My awesome body');
