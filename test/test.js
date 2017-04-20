@@ -109,13 +109,13 @@ describe('Data manipulation handling', function(){
 
 describe('Headers creation test', function(){
 	it('Should add a Content-Length header', function(){
-		expect(req.headers({
+		expect(req.headers('POST', {
 			'X-Some-Header': 'some value;'
 		}, 'data')).to.include.keys('Content-Length');
 	});
 
 	it('Should not add a Content-Length header', function(){
-		expect(req.headers({
+		expect(req.headers('POST', {
 			'X-Some-Header': 'some value;'
 		})).to.not.include.keys('Content-Length');
 	});
