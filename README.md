@@ -9,9 +9,9 @@ working http module, that permits very simple requests. `Do not use in productio
 ## Simple Example
 
 ```javascript
-var fr = require('fishingrod');
+const fishingrod = require('fishingrod');
 
-fr.fish({
+fishingrod.fish({
 	https:true,
 	host: 'example.com',
 	path: '/obj/1'
@@ -20,7 +20,7 @@ function(err, st, res){
 	console.log(res);
 });
 
-fr.fish({
+fishingrod.fish({
 	https:true,
 	host: 'example.com',
 	path: '/obj/2'
@@ -30,3 +30,14 @@ fr.fish({
 
 
 ``` 
+
+## Utility methods
+
+You can also call `fishingrod` with only a url using the utility methods. These are `.get`, `.post`, `.put`, `.delete`, `._method`.
+They all take `(url [STRING], data[OBJECT], headers[OBJECT])` as params, except `_method` which takes `(method, [STRING CAPITALS], url [STRING], data[OBJECT], headers[OBJECT])`.
+
+```javascript
+const fishingrod = require('fishingrod');
+
+fishingrod.get('http://google.com', {query:'Bottomatik chatbots'}, {'Accept':'application/pdf'});
+```
