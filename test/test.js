@@ -153,6 +153,7 @@ describe('HTTP Tests', function(){
 		});
 	});
 
+
 	it('CALLBACK: Should POST google.com', function(done){
 		fishingrod.fish({
 			https:true,
@@ -207,6 +208,22 @@ describe('HTTP Tests', function(){
 			done();
 		});
 	});
+
+	it('CALLBACK REDIRECTION: Should HTTPS GET REDIR google.com', function(done){
+		fishingrod.fish({
+			https:true,
+			method: 'GET',
+			host: 'google.com',
+			redir: true
+		}, (err, st, res)=>{
+			if(err){
+				throw new Error(err);
+			}
+
+			expect(st.status).to.be.eql(200);
+			done();
+		});
+	});
 });
 
 
@@ -219,8 +236,8 @@ describe('Promise Tests', function(){
 			expect(res.status).to.be.gt(199);
 			expect(res.status).to.be.lt(400);
 			done();
-		}).catch( function(err){
-			done();
+		}).catch((err) => {
+			done(err);
 		});
 	});
 
@@ -233,8 +250,8 @@ describe('Promise Tests', function(){
 			expect(res.status).to.be.gt(199);
 			expect(res.status).to.be.lt(400);
 			done();
-		}).catch(function(err){
-			done();
+		}).catch((err) => {
+			done(err);
 		});
 	});
 
@@ -245,8 +262,8 @@ describe('Promise Tests', function(){
 		}).then((res)=>{
 			expect(res.status).to.be.gt(399);
 			done();
-		}).catch( function(err){
-			done();
+		}).catch((err) => {
+			done(err);
 		});
 	});
 
@@ -262,7 +279,7 @@ describe('Promise Tests', function(){
 			expect(res.id).to.be.eql(1);
 			done();
 		}).catch((err)=>{
-			done();
+			done(err);
 		});
 	});
 
@@ -285,7 +302,21 @@ describe('Promise Tests', function(){
 			expect(res.body).to.be.eql('My awesome body');
 			done();
 		}).catch((e)=>{
+			done(e);
+		});
+	});
+
+	it('PROMISE REDIRECTION: Should HTTPS GET REDIR google.com', function(done){
+		fishingrod.fish({
+			https:true,
+			method: 'GET',
+			host: 'google.com',
+			redir: true
+		}).then(res => {
+			expect(res.status).to.be.eql(200);
 			done();
+		}).catch(e=>{
+			done(e);
 		});
 	});
 });
@@ -318,6 +349,37 @@ describe('Promise + Callback tests', function(){
 			}
 		}).catch((e)=>{
 			done();
+		});
+	});
+
+	it('REDIRECTION: Should HTTPS GET REDIR google.com for both', function(done){
+		let counter = 2;
+		fishingrod.fish({
+			https:true,
+			method: 'GET',
+			host: 'google.com',
+			redir: true
+		}, (err, st, res, raw)=>{
+			if(err){
+				let e = new Error(err);
+				done(e);
+			}
+			
+			expect(st.status).to.be.eql(200);
+			
+			counter--;
+			if(counter === 0){
+				done();
+			}
+
+		}).then(res => {
+			expect(res.status).to.be.eql(200);
+			counter--;
+			if(counter === 0){
+				done();
+			}
+		}).catch(e => {
+			done(e);
 		});
 	});
 });

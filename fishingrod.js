@@ -17,27 +17,27 @@ fishingrod.fish = function(params, callback){
 };
 
 fishingrod.get = function(url, data, headers){
-	let params = urlparser.request('GET', url, data, headers);
+	let params = urlparser.request(request, 'GET', url, data, headers);
 	return fishingrod.fish(params);
 };
 
 fishingrod.post = function(url, data, headers){
-	let params = urlparser.request('POST', url, data, headers);
+	let params = urlparser.request(request, 'POST', url, data, headers);
 	return fishingrod.fish(params);
 };
 
 fishingrod.put = function(url, data, headers){
-	let params = urlparser.request('PUT', url, data, headers);
+	let params = urlparser.request(request, 'PUT', url, data, headers);
 	return fishingrod.fish(params);
 };
 
 fishingrod.delete = function(url, data, headers){
-	let params = urlparser.request('DELETE', url, data, headers);
+	let params = urlparser.request(request, 'DELETE', url, data, headers);
 	return fishingrod.fish(params);
 };
 
 fishingrod.__method = function(method, url, data, headers){
-	let params = urlparser.request(method, url, data, headers);
+	let params = urlparser.request(request, method, url, data, headers);
 	return fishingrod.fish(params);
 };
 
