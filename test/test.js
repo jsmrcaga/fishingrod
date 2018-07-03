@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
-var fishingrod = require('../fishingrod.js');
-var req = require('../lib/request.js');
+let fishingrod = require('../fishingrod.js');
+let req = require('../lib/request.js');
 
 describe('Data manipulation handling', function(){
 	it('Should return the same data', function(){
@@ -292,7 +292,7 @@ describe('Promise Tests', function(){
 
 describe('Promise + Callback tests', function(){
 	it('Should execute both callback and promise', function(done){
-		var counter = 2;
+		let counter = 2;
 
 		fishingrod.fish({
 			https:true,

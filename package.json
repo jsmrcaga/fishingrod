@@ -17,6 +17,7 @@
   "author": "Jo Colina",
   "license": "MIT",
   "devDependencies": {
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "mocha": "^5.2.0"
   }
 }

@@ -10,7 +10,7 @@ fishingrod.fish = function(params, callback){
 	if(!params.method) { params.method = 'GET'; }
 	if(!params.https) { params.https = false; }
 
-	var data = request.handle(params, params.extra);
+	let data = request.handle(params, params.extra);
 	params.headers = request.headers(params.method, params.headers, data);
 
 	return request(params, data, callback);
